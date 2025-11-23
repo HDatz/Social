@@ -3,7 +3,6 @@ package com.example.social_network.Service;
 import com.example.social_network.Dto.request.CommentCreateRequest;
 import com.example.social_network.Dto.request.CommentUpdateRequest;
 import com.example.social_network.Dto.response.CommentResponse;
-import com.example.social_network.Dto.response.UserResponse;
 import com.example.social_network.Entity.Comment;
 import com.example.social_network.Exception.AppException;
 import com.example.social_network.Exception.ErrorCode;
