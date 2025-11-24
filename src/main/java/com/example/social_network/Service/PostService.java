@@ -7,6 +7,7 @@ import com.example.social_network.Entity.Post;
 import com.example.social_network.Exception.AppException;
 import com.example.social_network.Exception.ErrorCode;
 import com.example.social_network.Mapper.PostMapper;
+import com.example.social_network.Repository.CommentRepository;
 import com.example.social_network.Repository.PostReponsitory;
 import com.example.social_network.Repository.UserReponsitory;
 import com.example.social_network.Security.SecurityUtils;
@@ -25,6 +26,7 @@ public class PostService {
 
     PostReponsitory postReponsitory;
     PostMapper postMapper;
+    CommentRepository commentRepository;
     UserReponsitory userReponsitory;
 
     public PostResponse createPost(PostCreateRequest request){
@@ -42,17 +44,33 @@ public class PostService {
           post.setUser(user);
           post = postReponsitory.save(post);
 
-          return  postMapper.toPostResponse(post);
+          PostResponse response = postMapper.toPostResponse(post);
+
+          response.setTotalComment(0);
+
+          return  response;
     }
 
     public List<PostResponse> getAll(){
-        return postReponsitory.findAll().stream().map(postMapper::toPostResponse).toList();
+        return postReponsitory.findAll().stream().map(
+                post -> {
+                    PostResponse r = postMapper.toPostResponse(post);
+                    int total = commentRepository.countByPost_PostId(post.getPostId());
+                    r.setTotalComment(total);
+                    return r;
+                })
+                .toList();
     }
 
     public PostResponse getPost(String postId){
-        return postMapper.toPostResponse(
-                postReponsitory.findById(postId).orElseThrow(() -> new AppException(ErrorCode.POST_DON_EXIST))
-        );
+        Post post= postReponsitory.findById(postId)
+                .orElseThrow(() ->new AppException(ErrorCode.POST_DON_EXIST));
+
+        PostResponse response = postMapper.toPostResponse(post);
+
+        int total = commentRepository.countByPost_PostId(postId);
+        response.setTotalComment(total);
+        return response;
     }
 
     @PreAuthorize(" @postSecurity.isOwner(#postId)")

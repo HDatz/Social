@@ -47,7 +47,7 @@ public class Comment {
     }
 
     @PreUpdate
-    protected void onupdateCommen(){
+    protected void onupdateComment(){
         this.updateComment = LocalDateTime.now();
     }
 }
