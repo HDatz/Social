@@ -11,4 +11,5 @@ import lombok.experimental.FieldDefaults;
 public class ExpressionTypeResponse {
     String expressionName;
     String descriptionExpression;
+    String icon;
 }
