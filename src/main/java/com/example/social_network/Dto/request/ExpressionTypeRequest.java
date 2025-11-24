@@ -12,4 +12,6 @@ public class ExpressionTypeRequest {
     String expressionName;
 
     String descriptionExpression;
+
+    String icon;
 }

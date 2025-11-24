@@ -17,4 +17,6 @@ public class ExpressionType {
     String expressionName;
 
     String descriptionExpression;
+
+    String icon;
 }
