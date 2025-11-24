@@ -70,6 +70,7 @@ public class UserService {
         return users.stream().map(userMapper::toUserResponse).toList();
     }
 
+    @PreAuthorize("@userSecurity.isOwner(#userId) or hasRole('ADMIN')")
     public UserResponse updateUser(String id, UserUpdateRequest request) {
         User user = userReponsitory.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_DON_EXIST));
         userMapper.updateUser(user, request);

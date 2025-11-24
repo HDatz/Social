@@ -38,6 +38,8 @@ public class Comment {
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
     List<Comment> replies;
 
+    @OneToMany(mappedBy = "comment")
+    List<Expression> expressions;
 
     @PrePersist
     protected void ontimeConmment(){
