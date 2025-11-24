@@ -23,4 +23,6 @@ public class PostResponse {
 
     String userId;
     String fullName;
+
+    int totalComment;
 }
