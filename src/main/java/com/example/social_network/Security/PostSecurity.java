@@ -6,6 +6,7 @@ import com.example.social_network.Repository.PostReponsitory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @Component("postSecurity")
 @RequiredArgsConstructor
@@ -17,12 +18,11 @@ public class PostSecurity {
         var userId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         var post = postReponsitory.findById(postId)
-                .orElseThrow(() -> new AppException(ErrorCode.POST_DON_EXIST));
+                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND));
 
         if(!post.getUser().getUserId().equals(userId)) {
             throw new AppException(ErrorCode.UNAUTHORIZED);
         }
-
         return true;
     }
 }

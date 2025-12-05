@@ -6,15 +6,20 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
-    USER_EXISTED(1001,"User existed", HttpStatus.BAD_REQUEST),
-    USER_DON_EXIST(1002,"User don't exist", HttpStatus.BAD_REQUEST),
-    POST_DON_EXIST(1003,"Post don't exist", HttpStatus.BAD_REQUEST),
-    USER_NOT_FOUND(1006, "User Not Found", HttpStatus.BAD_REQUEST),
-    UNAUTHENTICATED(1003, "Unauthenticated", HttpStatus.UNAUTHORIZED),
-    UNAUTHORIZED(1004, "You do not have permission", HttpStatus.FORBIDDEN),
-    COMMENT_NOT_FOUND(1007, "Comment not found",HttpStatus.NOT_FOUND),
-    COMMENT_DONT_EXIST(1008, "Comment dont exist",HttpStatus.NOT_FOUND),
-    USER_NOT_EXISTED(1005, "User not existed", HttpStatus.NOT_FOUND);
+
+    USER_EXISTED(1001,"User already exists", HttpStatus.BAD_REQUEST),
+    USER_NOT_FOUND(1002, "User not found", HttpStatus.NOT_FOUND),
+
+    POST_NOT_FOUND(1003,"Post not found", HttpStatus.NOT_FOUND),
+
+    UNAUTHENTICATED(1004, "Unauthenticated", HttpStatus.UNAUTHORIZED),
+    UNAUTHORIZED(1005, "You do not have permission", HttpStatus.FORBIDDEN),
+
+    COMMENT_NOT_FOUND(1006, "Comment not found", HttpStatus.NOT_FOUND),
+
+    INVALID_EXPRESSION(1007, "Invalid expression", HttpStatus.BAD_REQUEST),
+
+    EXPRESSION_TYPE_NOT_FOUND(1008, "Expression type not found", HttpStatus.BAD_REQUEST);
 
     ErrorCode(int code, String message, HttpStatus httpStatus){
         this.code = code;

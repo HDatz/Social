@@ -52,7 +52,7 @@ public class UserService {
     @PreAuthorize("hasRole('ADMIN')")
     public UserResponse getUser(String id) {
         return userMapper.toUserResponse(
-                userReponsitory.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_DON_EXIST)));
+                userReponsitory.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND)));
     }
 
     public List<UserResponse> searchUser(String keyword){
@@ -72,7 +72,7 @@ public class UserService {
 
     @PreAuthorize("@userSecurity.isOwner(#userId) or hasRole('ADMIN')")
     public UserResponse updateUser(String id, UserUpdateRequest request) {
-        User user = userReponsitory.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_DON_EXIST));
+        User user = userReponsitory.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
         userMapper.updateUser(user, request);
 
         if(request.getPassword() != null){
