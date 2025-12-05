@@ -39,7 +39,7 @@ public class PostService {
           }
 
           var user = userReponsitory.findById(userId)
-                  .orElseThrow(() -> new AppException(ErrorCode.USER_DON_EXIST));
+                  .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
           post.setUser(user);
           post = postReponsitory.save(post);
@@ -64,7 +64,7 @@ public class PostService {
 
     public PostResponse getPost(String postId){
         Post post= postReponsitory.findById(postId)
-                .orElseThrow(() ->new AppException(ErrorCode.POST_DON_EXIST));
+                .orElseThrow(() ->new AppException(ErrorCode.POST_NOT_FOUND));
 
         PostResponse response = postMapper.toPostResponse(post);
 
@@ -75,7 +75,8 @@ public class PostService {
 
     @PreAuthorize(" @postSecurity.isOwner(#postId)")
     public PostResponse updatePost(String postId, PostUpdateRequest request){
-        Post post = postReponsitory.findById(postId).orElseThrow(() -> new AppException(ErrorCode.POST_DON_EXIST));
+        Post post = postReponsitory.findById(postId)
+                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND));
 
         postMapper.updatePost(post, request);
 

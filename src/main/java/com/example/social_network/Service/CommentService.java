@@ -41,7 +41,7 @@ public class CommentService {
         comment.setUser(user);
 
         var post =postReponsitory.findById(request.getPostId())
-                .orElseThrow(() -> new AppException(ErrorCode.POST_DON_EXIST));
+                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND));
 
         comment.setPost(post);
 
@@ -73,7 +73,7 @@ public class CommentService {
     @PreAuthorize("@commentSecurity.canUpdate(#commentId)")
     public CommentResponse updateComment(String commentId, CommentUpdateRequest request){
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new AppException(ErrorCode.COMMENT_DONT_EXIST));
+                .orElseThrow(() -> new AppException(ErrorCode.COMMENT_NOT_FOUND));
         commentMapper.updateComment(comment, request);
         return commentMapper.toCommentResponse(commentRepository.save(comment));
     }

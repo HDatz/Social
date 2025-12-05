@@ -16,7 +16,7 @@ public class UserSecurity {
 
     public boolean isOwner(String userId){
         var user = userReponsitory.findById(userId)
-                .orElseThrow(() -> new AppException(ErrorCode.USER_DON_EXIST));
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if(auth == null  || !auth.isAuthenticated()){
